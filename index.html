@@ -479,6 +479,22 @@
   }
   .footer strong { color: #94A3B8; }
 
+  /* Smooth scroll */
+  html { scroll-behavior: smooth; }
+
+  /* Pill links */
+  a.hero-pill {
+    text-decoration: none;
+    color: #CBD5E1;
+    cursor: pointer;
+    transition: background .2s, color .2s, transform .15s;
+  }
+  a.hero-pill:hover {
+    background: rgba(255,255,255,.22);
+    color: #fff;
+    transform: translateY(-2px);
+  }
+
   /* Print */
   @media print {
     .hero { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -495,15 +511,15 @@
   <h1>IT Infrastructure <span>&</span> DevOps<br>Mastery</h1>
   <p>Every key concept from the 12-week programme — explained visually, beginner-friendly.</p>
   <div class="hero-pills">
-    <span class="hero-pill">🖥️ Hardware</span>
-    <span class="hero-pill">🌐 Networking</span>
-    <span class="hero-pill">🪟 Windows</span>
-    <span class="hero-pill">🐧 Linux</span>
-    <span class="hero-pill">☁️ Cloud</span>
-    <span class="hero-pill">🐳 Docker</span>
-    <span class="hero-pill">⚙️ Kubernetes</span>
-    <span class="hero-pill">🔐 Security</span>
-    <span class="hero-pill">📜 Scripting</span>
+    <a href="#hardware"   class="hero-pill">🖥️ Hardware</a>
+    <a href="#networking" class="hero-pill">🌐 Networking</a>
+    <a href="#windows"    class="hero-pill">🪟 Windows</a>
+    <a href="#linux"      class="hero-pill">🐧 Linux</a>
+    <a href="#cloud"      class="hero-pill">☁️ Cloud</a>
+    <a href="#docker"     class="hero-pill">🐳 Docker</a>
+    <a href="#kubernetes" class="hero-pill">⚙️ Kubernetes</a>
+    <a href="#security"   class="hero-pill">🔐 Security</a>
+    <a href="#scripting"  class="hero-pill">📜 Scripting</a>
   </div>
 </div>
 
@@ -512,7 +528,7 @@
 <!-- ══════════════════════════════════════════════════════════
      PART 1 — IT FOUNDATIONS
 ══════════════════════════════════════════════════════════ -->
-<div class="part-banner" style="background: linear-gradient(135deg, #0D1B2A, #1B3A6B);">
+<div id="hardware" class="part-banner" style="background: linear-gradient(135deg, #0D1B2A, #1B3A6B);">
   <div class="part-number">1</div>
   <div class="part-text">
     <h2>IT Foundations</h2>
@@ -781,7 +797,7 @@
 <!-- ══════════════════════════════════════════════════════════
      PART 2 — NETWORKING
 ══════════════════════════════════════════════════════════ -->
-<div class="part-banner" style="background: linear-gradient(135deg, #0F766E, #0D9488);">
+<div id="networking" class="part-banner" style="background: linear-gradient(135deg, #0F766E, #0D9488);">
   <div class="part-number">2</div>
   <div class="part-text">
     <h2>Networking Fundamentals</h2>
@@ -1013,7 +1029,7 @@
 <!-- ══════════════════════════════════════════════════════════
      PART 3 — LINUX
 ══════════════════════════════════════════════════════════ -->
-<div class="part-banner" style="background: linear-gradient(135deg, #166534, #16A34A);">
+<div id="linux" class="part-banner" style="background: linear-gradient(135deg, #166534, #16A34A);">
   <div class="part-number">3</div>
   <div class="part-text">
     <h2>Linux Administration</h2>
@@ -1091,7 +1107,7 @@
 <!-- ══════════════════════════════════════════════════════════
      PART 4 — WINDOWS SERVER / ACTIVE DIRECTORY
 ══════════════════════════════════════════════════════════ -->
-<div class="part-banner" style="background: linear-gradient(135deg, #1E3A5F, #1B6CA8);">
+<div id="windows" class="part-banner" style="background: linear-gradient(135deg, #1E3A5F, #1B6CA8);">
   <div class="part-number">4</div>
   <div class="part-text">
     <h2>Windows Server & Active Directory</h2>
@@ -1157,7 +1173,7 @@
 <!-- ══════════════════════════════════════════════════════════
      PART 5 — DOCKER & KUBERNETES
 ══════════════════════════════════════════════════════════ -->
-<div class="part-banner" style="background: linear-gradient(135deg, #0A4A8A, #0D9488);">
+<div id="docker" class="part-banner" style="background: linear-gradient(135deg, #0A4A8A, #0D9488);">
   <div class="part-number">5</div>
   <div class="part-text">
     <h2>Containers & Orchestration</h2>
@@ -1249,7 +1265,7 @@
 </div>
 
 <!-- KUBERNETES -->
-<div class="section-label">Week 9 · Day 5</div>
+<div id="kubernetes" class="section-label">Week 9 · Day 5</div>
 <div class="section-title">Kubernetes Architecture</div>
 <div class="section-subtitle">Kubernetes manages containers at scale — it's the OS for your containers</div>
 <div class="card" style="margin-bottom:40px">
@@ -1319,7 +1335,7 @@
 <!-- ══════════════════════════════════════════════════════════
      PART 6 — CLOUD
 ══════════════════════════════════════════════════════════ -->
-<div class="part-banner" style="background: linear-gradient(135deg, #FF9900 0%, #C7511F 100%);">
+<div id="cloud" class="part-banner" style="background: linear-gradient(135deg, #FF9900 0%, #C7511F 100%);">
   <div class="part-number">6</div>
   <div class="part-text">
     <h2>Cloud Computing</h2>
@@ -1412,7 +1428,7 @@
 <!-- ══════════════════════════════════════════════════════════
      PART 7 — CYBERSECURITY
 ══════════════════════════════════════════════════════════ -->
-<div class="part-banner" style="background: linear-gradient(135deg, #7F1D1D, #DC2626);">
+<div id="security" class="part-banner" style="background: linear-gradient(135deg, #7F1D1D, #DC2626);">
   <div class="part-number">7</div>
   <div class="part-text">
     <h2>Cybersecurity Fundamentals</h2>
@@ -1513,7 +1529,7 @@
 <!-- ══════════════════════════════════════════════════════════
      PART 8 — SCRIPTING
 ══════════════════════════════════════════════════════════ -->
-<div class="part-banner" style="background: linear-gradient(135deg, #4C1D95, #7C3AED);">
+<div id="scripting" class="part-banner" style="background: linear-gradient(135deg, #4C1D95, #7C3AED);">
   <div class="part-number">8</div>
   <div class="part-text">
     <h2>Scripting & Automation</h2>
