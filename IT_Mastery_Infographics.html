@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IT Infrastructure & DevOps — Visual Study Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:    #0D1B2A;
+    --blue:    #1B6CA8;
+    --ltblue:  #3A9BD5;
+    --teal:    #0D9488;
+    --green:   #16A34A;
+    --amber:   #D97706;
+    --red:     #DC2626;
+    --purple:  #7C3AED;
+    --pink:    #DB2777;
+    --gold:    #F59E0B;
+    --white:   #F8FAFC;
+    --gray:    #E2E8F0;
+    --dark:    #1E293B;
+    --muted:   #64748B;
+    --card:    #FFFFFF;
+    --bg:      #F0F4F8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background: var(--bg);
+    color: var(--dark);
+    line-height: 1.6;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #0D1B2A 0%, #1B3A6B 50%, #0D1B2A 100%);
+    padding: 60px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 20% 50%, rgba(59,155,213,.15) 0%, transparent 60%),
+                radial-gradient(circle at 80% 50%, rgba(124,58,237,.12) 0%, transparent 60%);
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.2);
+    color: #93C5FD;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 6px 18px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(32px, 5vw, 64px);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 12px;
+    position: relative;
+  }
+  .hero h1 span { color: #F59E0B; }
+  .hero p {
+    color: #94A3B8;
+    font-size: 18px;
+    max-width: 600px;
+    margin: 0 auto 30px;
+    position: relative;
+  }
+  .hero-pills {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    justify-content: center; position: relative;
+  }
+  .hero-pill {
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.15);
+    color: #CBD5E1;
+    font-size: 13px;
+    padding: 5px 14px;
+    border-radius: 20px;
+  }
+
+  /* ── LAYOUT ── */
+  .page { max-width: 1400px; margin: 0 auto; padding: 50px 24px; }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 800;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+  .section-subtitle {
+    color: var(--muted);
+    font-size: 16px;
+    margin-bottom: 36px;
+  }
+
+  /* ── PART BANNER ── */
+  .part-banner {
+    border-radius: 16px;
+    padding: 24px 32px;
+    margin: 60px 0 32px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .part-banner::after {
+    content: '';
+    position: absolute; right: -20px; top: -20px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.06);
+  }
+  .part-number {
+    font-family: 'Syne', sans-serif;
+    font-size: 56px;
+    font-weight: 800;
+    opacity: .25;
+    line-height: 1;
+    min-width: 60px;
+  }
+  .part-text h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+  }
+  .part-text p { opacity: .8; font-size: 15px; }
+
+  /* ── CARD GRID ── */
+  .grid { display: grid; gap: 20px; }
+  .grid-2 { grid-template-columns: repeat(auto-fit, minmax(480px, 1fr)); }
+  .grid-3 { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+  .grid-4 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+
+  /* ── BASE CARD ── */
+  .card {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.06);
+    border: 1px solid rgba(0,0,0,.06);
+    position: relative;
+    overflow: hidden;
+  }
+  .card-accent {
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 4px;
+    border-radius: 16px 16px 0 0;
+  }
+  .card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--navy);
+  }
+  .card-icon {
+    font-size: 32px;
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  /* ── INFO ROWS ── */
+  .info-row {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray);
+  }
+  .info-row:last-child { border-bottom: none; }
+  .info-key {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--blue);
+    min-width: 100px;
+    padding-top: 2px;
+  }
+  .info-val { font-size: 14px; color: #374151; }
+
+  /* ── TAGS ── */
+  .tag {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .tag-blue  { background: #DBEAFE; color: #1D4ED8; }
+  .tag-green { background: #DCFCE7; color: #166534; }
+  .tag-amber { background: #FEF3C7; color: #92400E; }
+  .tag-red   { background: #FEE2E2; color: #991B1B; }
+  .tag-purple{ background: #EDE9FE; color: #5B21B6; }
+  .tag-teal  { background: #CCFBF1; color: #0F766E; }
+
+  /* ── CODE BLOCK ── */
+  .code-block {
+    background: #0D1B2A;
+    border-radius: 10px;
+    padding: 16px 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    overflow-x: auto;
+    margin: 12px 0;
+  }
+  .code-block .cmd  { color: #4ADE80; }
+  .code-block .cmt  { color: #64748B; }
+  .code-block .str  { color: #FCD34D; }
+  .code-block .var  { color: #93C5FD; }
+  .code-block .out  { color: #CBD5E1; }
+
+  /* ── CALLOUT ── */
+  .callout {
+    border-radius: 10px;
+    padding: 14px 18px;
+    display: flex; gap: 12px; align-items: flex-start;
+    margin: 12px 0;
+    font-size: 14px;
+  }
+  .callout-icon { font-size: 18px; flex-shrink: 0; }
+  .callout-tip    { background: #EFF6FF; border-left: 4px solid #3B82F6; }
+  .callout-warn   { background: #FFFBEB; border-left: 4px solid #F59E0B; }
+  .callout-danger { background: #FEF2F2; border-left: 4px solid #EF4444; }
+  .callout-success{ background: #F0FDF4; border-left: 4px solid #22C55E; }
+
+  /* ── LADDER / FLOW ── */
+  .ladder { display: flex; flex-direction: column; gap: 0; }
+  .ladder-item {
+    display: flex; align-items: center; gap: 14px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    position: relative;
+  }
+  .ladder-item::after {
+    content: '↓';
+    position: absolute;
+    bottom: -14px; left: 24px;
+    font-size: 14px;
+    color: var(--muted);
+    z-index: 1;
+  }
+  .ladder-item:last-child::after { display: none; }
+  .ladder-num {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 13px; flex-shrink: 0;
+    color: #fff;
+  }
+  .ladder-text { font-size: 14px; }
+  .ladder-text strong { display: block; font-weight: 700; font-size: 14px; margin-bottom: 2px; }
+  .ladder-spacer { height: 10px; }
+
+  /* ── COMPARISON TABLE ── */
+  .compare-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .compare-table th {
+    background: var(--navy); color: #fff;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    padding: 10px 14px; text-align: left;
+  }
+  .compare-table th:first-child { border-radius: 8px 0 0 0; }
+  .compare-table th:last-child  { border-radius: 0 8px 0 0; }
+  .compare-table td { padding: 10px 14px; border-bottom: 1px solid var(--gray); }
+  .compare-table tr:nth-child(even) td { background: #F8FAFC; }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table .highlight { font-weight: 700; color: var(--blue); }
+
+  /* ── OSI LAYERS ── */
+  .osi-layer {
+    display: flex; align-items: center; gap: 0;
+    margin-bottom: 6px; border-radius: 8px; overflow: hidden;
+  }
+  .osi-num {
+    width: 40px; min-width: 40px; height: 46px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 18px; color: #fff;
+  }
+  .osi-name {
+    flex: 1; padding: 0 14px; height: 46px;
+    display: flex; align-items: center;
+    font-weight: 700; font-size: 14px; color: #fff;
+  }
+  .osi-proto {
+    flex: 2; padding: 0 14px; height: 46px;
+    display: flex; align-items: center;
+    font-size: 13px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .osi-device {
+    padding: 0 14px; height: 46px;
+    display: flex; align-items: center;
+    font-size: 12px; font-weight: 700;
+    min-width: 90px;
+  }
+
+  /* ── SUBNET VISUAL ── */
+  .subnet-bar {
+    height: 36px; border-radius: 8px;
+    display: flex; align-items: center; overflow: hidden;
+    margin-bottom: 10px; font-size: 13px; font-weight: 700;
+  }
+  .subnet-net {
+    background: var(--blue); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    height: 100%; padding: 0 10px;
+  }
+  .subnet-host {
+    background: var(--teal); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    height: 100%; padding: 0 10px; flex: 1;
+  }
+
+  /* ── STAR / ROLE CARDS ── */
+  .role-card {
+    border-radius: 12px; padding: 20px;
+    text-align: center; border: 2px solid transparent;
+    transition: transform .2s;
+  }
+  .role-card:hover { transform: translateY(-4px); }
+  .role-icon { font-size: 40px; margin-bottom: 10px; }
+  .role-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700; font-size: 15px;
+    margin-bottom: 6px;
+  }
+  .role-salary {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 700;
+  }
+  .role-desc { font-size: 12px; color: var(--muted); margin-top: 6px; }
+
+  /* ── CERT PATH ── */
+  .cert-path {
+    display: flex; gap: 0; align-items: stretch;
+    flex-wrap: wrap;
+  }
+  .cert-step {
+    flex: 1; min-width: 120px;
+    padding: 16px 12px; text-align: center;
+    position: relative;
+  }
+  .cert-step::after {
+    content: '→';
+    position: absolute; right: -10px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px; font-weight: 700;
+    color: var(--muted); z-index: 1;
+  }
+  .cert-step:last-child::after { display: none; }
+  .cert-badge {
+    border-radius: 10px; padding: 8px 12px;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px; font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .cert-name { font-size: 12px; color: var(--muted); }
+
+  /* ── BINARY VISUAL ── */
+  .bit-grid { display: flex; gap: 4px; flex-wrap: wrap; margin: 10px 0; }
+  .bit {
+    width: 36px; height: 36px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px; font-weight: 700;
+  }
+  .bit-1 { background: var(--blue); color: #fff; }
+  .bit-0 { background: var(--gray); color: var(--muted); }
+  .bit-val { font-size: 11px; color: var(--muted); text-align: center; margin-top: 2px; }
+
+  /* ── PERMISSION GRID ── */
+  .perm-row {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 0; border-bottom: 1px solid var(--gray);
+    font-size: 14px;
+  }
+  .perm-char {
+    width: 32px; height: 32px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px; font-weight: 700;
+  }
+  .perm-r { background: #DBEAFE; color: #1D4ED8; }
+  .perm-w { background: #FEF3C7; color: #92400E; }
+  .perm-x { background: #DCFCE7; color: #166534; }
+  .perm-dash{ background: var(--gray); color: var(--muted); }
+
+  /* ── PIPELINE FLOW ── */
+  .pipeline {
+    display: flex; align-items: center;
+    flex-wrap: wrap; gap: 6px; margin: 12px 0;
+  }
+  .pipe-step {
+    background: var(--navy); color: #4ADE80;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; padding: 8px 14px; border-radius: 8px;
+  }
+  .pipe-arrow {
+    color: var(--muted); font-size: 20px; font-weight: 700;
+  }
+
+  /* ── DOCKER LAYERS ── */
+  .docker-stack { display: flex; flex-direction: column; gap: 4px; }
+  .docker-layer {
+    border-radius: 8px; padding: 10px 16px;
+    font-size: 13px; font-weight: 700;
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  /* ── K8S ARCH ── */
+  .k8s-box {
+    border: 2px solid; border-radius: 12px; padding: 16px;
+    margin-bottom: 12px;
+  }
+  .k8s-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 12px; font-weight: 800;
+    letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .k8s-items { display: flex; flex-wrap: wrap; gap: 8px; }
+  .k8s-item {
+    border-radius: 8px; padding: 8px 12px;
+    font-size: 13px; font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ── CIA TRIAD ── */
+  .cia-card {
+    border-radius: 14px; padding: 24px;
+    text-align: center; color: #fff;
+  }
+  .cia-icon { font-size: 48px; margin-bottom: 12px; }
+  .cia-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px; font-weight: 800; margin-bottom: 8px;
+  }
+  .cia-def { font-size: 14px; opacity: .9; margin-bottom: 12px; }
+  .cia-examples { font-size: 13px; opacity: .8; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    .cert-path { flex-direction: column; }
+    .cert-step::after { content: '↓'; right: auto; top: auto; bottom: -12px; left: 50%; transform: translateX(-50%); }
+    .osi-proto, .osi-device { display: none; }
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--navy); color: #64748B;
+    text-align: center; padding: 30px;
+    font-size: 13px; margin-top: 60px;
+  }
+  .footer strong { color: #94A3B8; }
+
+  /* Print */
+  @media print {
+    .hero { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .card { break-inside: avoid; }
+    .part-banner { break-before: page; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════ HERO ══════════════ -->
+<div class="hero">
+  <div class="hero-badge">Visual Study Guide</div>
+  <h1>IT Infrastructure <span>&</span> DevOps<br>Mastery</h1>
+  <p>Every key concept from the 12-week programme — explained visually, beginner-friendly.</p>
+  <div class="hero-pills">
+    <span class="hero-pill">🖥️ Hardware</span>
+    <span class="hero-pill">🌐 Networking</span>
+    <span class="hero-pill">🪟 Windows</span>
+    <span class="hero-pill">🐧 Linux</span>
+    <span class="hero-pill">☁️ Cloud</span>
+    <span class="hero-pill">🐳 Docker</span>
+    <span class="hero-pill">⚙️ Kubernetes</span>
+    <span class="hero-pill">🔐 Security</span>
+    <span class="hero-pill">📜 Scripting</span>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ══════════════════════════════════════════════════════════
+     PART 1 — IT FOUNDATIONS
+══════════════════════════════════════════════════════════ -->
+<div class="part-banner" style="background: linear-gradient(135deg, #0D1B2A, #1B3A6B);">
+  <div class="part-number">1</div>
+  <div class="part-text">
+    <h2>IT Foundations</h2>
+    <p>Career paths · Hardware · Binary · OSI Model · Virtualisation</p>
+  </div>
+</div>
+
+<!-- IT CAREER PATHS -->
+<div class="section-label">Week 1 · Day 1</div>
+<div class="section-title">IT Career Paths</div>
+<div class="section-subtitle">Where you can go — and how long it takes to get there</div>
+<div class="grid grid-3" style="margin-bottom:40px">
+  <div class="role-card" style="background:#EFF6FF; border-color:#BFDBFE;">
+    <div class="role-icon">🎧</div>
+    <div class="role-title" style="color:#1E40AF">Help Desk / Tech Support</div>
+    <div class="role-salary" style="color:#3B82F6">£22,000 – £32,000</div>
+    <div class="role-desc">First contact. Password resets, hardware, connectivity. Entry point for most IT careers. CompTIA A+ is your goal.</div>
+  </div>
+  <div class="role-card" style="background:#F0FDF4; border-color:#BBF7D0;">
+    <div class="role-icon">🖥️</div>
+    <div class="role-title" style="color:#166534">System Administrator</div>
+    <div class="role-salary" style="color:#16A34A">£35,000 – £55,000</div>
+    <div class="role-desc">Manages servers, user accounts, backups, patching. Day-to-day IT operations. 2–5 years experience.</div>
+  </div>
+  <div class="role-card" style="background:#FFF7ED; border-color:#FED7AA;">
+    <div class="role-icon">🌐</div>
+    <div class="role-title" style="color:#9A3412">Network Administrator</div>
+    <div class="role-salary" style="color:#EA580C">£40,000 – £65,000</div>
+    <div class="role-desc">Routers, switches, firewalls, VLANs. Designs and maintains network infrastructure.</div>
+  </div>
+  <div class="role-card" style="background:#EDE9FE; border-color:#DDD6FE;">
+    <div class="role-icon">☁️</div>
+    <div class="role-title" style="color:#5B21B6">Cloud Engineer</div>
+    <div class="role-salary" style="color:#7C3AED">£60,000 – £100,000</div>
+    <div class="role-desc">AWS, Azure, GCP. Virtual machines in the cloud. Infrastructure as Code. Growing fastest.</div>
+  </div>
+  <div class="role-card" style="background:#F0FDF4; border-color:#BBF7D0;">
+    <div class="role-icon">🔐</div>
+    <div class="role-title" style="color:#166534">Security Analyst</div>
+    <div class="role-salary" style="color:#16A34A">£40,000 – £70,000</div>
+    <div class="role-desc">Monitors threats, incident response, compliance. CompTIA Security+ opens this door.</div>
+  </div>
+  <div class="role-card" style="background:#FEF2F2; border-color:#FECACA;">
+    <div class="role-icon">⚙️</div>
+    <div class="role-title" style="color:#991B1B">DevOps / SRE</div>
+    <div class="role-salary" style="color:#DC2626">£55,000 – £110,000</div>
+    <div class="role-desc">CI/CD pipelines, Docker, Kubernetes, automation. Highest-paid infrastructure role. 3+ years.</div>
+  </div>
+</div>
+
+<!-- CERTIFICATION ROADMAP -->
+<div class="section-label">Week 1 · Certifications</div>
+<div class="section-title">Certification Roadmap</div>
+<div class="section-subtitle">The order that makes sense — each cert builds on the last</div>
+<div class="card" style="margin-bottom:40px">
+  <div class="card-accent" style="background: linear-gradient(90deg, #1B6CA8, #7C3AED, #16A34A)"></div>
+  <div class="cert-path" style="margin-top:12px">
+    <div class="cert-step">
+      <div class="cert-badge" style="background:#DBEAFE; color:#1D4ED8">CompTIA A+</div>
+      <div class="cert-name">Core 1 + Core 2<br>Start here. Always.</div>
+    </div>
+    <div class="cert-step">
+      <div class="cert-badge" style="background:#EDE9FE; color:#5B21B6">Network+</div>
+      <div class="cert-name">TCP/IP, DNS, Routing<br>After A+</div>
+    </div>
+    <div class="cert-step">
+      <div class="cert-badge" style="background:#FEF3C7; color:#92400E">Security+</div>
+      <div class="cert-name">DoD-approved baseline<br>After Network+</div>
+    </div>
+    <div class="cert-step">
+      <div class="cert-badge" style="background:#F0FDF4; color:#166534">Linux+ / RHCSA</div>
+      <div class="cert-name">Linux admin<br>Very employable</div>
+    </div>
+    <div class="cert-step">
+      <div class="cert-badge" style="background:#CCFBF1; color:#0F766E">AWS CCP / AZ-900</div>
+      <div class="cert-name">Cloud fundamentals<br>Entry-level cloud</div>
+    </div>
+    <div class="cert-step">
+      <div class="cert-badge" style="background:#FEE2E2; color:#991B1B">AWS SAA / CKA</div>
+      <div class="cert-name">Solutions Architect<br>or Kubernetes Admin</div>
+    </div>
+  </div>
+</div>
+
+<!-- 7-STEP TROUBLESHOOTING -->
+<div class="section-label">Week 1 · Day 1</div>
+<div class="section-title">The 7-Step Troubleshooting Methodology</div>
+<div class="section-subtitle">Follow this every time — don't guess, diagnose.</div>
+<div class="grid grid-2" style="margin-bottom:40px">
+  <div class="card">
+    <div class="card-accent" style="background: linear-gradient(90deg, #1B6CA8, #0D9488)"></div>
+    <div class="ladder">
+      <div class="ladder-item" style="background:#EFF6FF">
+        <div class="ladder-num" style="background:#1B6CA8">1</div>
+        <div class="ladder-text"><strong>Identify the Problem</strong> Ask: What happened? What error? What changed recently? Don't touch anything yet.</div>
+      </div>
+      <div class="ladder-spacer"></div>
+      <div class="ladder-item" style="background:#F0FDF4">
+        <div class="ladder-num" style="background:#16A34A">2</div>
+        <div class="ladder-text"><strong>Theory of Probable Cause</strong> Start with the simplest explanation first. Is the cable plugged in?</div>
+      </div>
+      <div class="ladder-spacer"></div>
+      <div class="ladder-item" style="background:#FEF3C7">
+        <div class="ladder-num" style="background:#D97706">3</div>
+        <div class="ladder-text"><strong>Test the Theory</strong> Try your fix. Works? Move on. Fails? Form a new theory.</div>
+      </div>
+      <div class="ladder-spacer"></div>
+      <div class="ladder-item" style="background:#EDE9FE">
+        <div class="ladder-num" style="background:#7C3AED">4</div>
+        <div class="ladder-text"><strong>Plan of Action</strong> Know what you'll do, what could break, and how to reverse it.</div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-accent" style="background: linear-gradient(90deg, #7C3AED, #DC2626)"></div>
+    <div class="ladder">
+      <div class="ladder-item" style="background:#FEE2E2">
+        <div class="ladder-num" style="background:#DC2626">5</div>
+        <div class="ladder-text"><strong>Implement the Solution</strong> Carry out your plan carefully and methodically.</div>
+      </div>
+      <div class="ladder-spacer"></div>
+      <div class="ladder-item" style="background:#F0FDF4">
+        <div class="ladder-num" style="background:#16A34A">6</div>
+        <div class="ladder-text"><strong>Verify Full Functionality</strong> Confirm your fix worked AND nothing else broke.</div>
+      </div>
+      <div class="ladder-spacer"></div>
+      <div class="ladder-item" style="background:#EFF6FF">
+        <div class="ladder-num" style="background:#1B6CA8">7</div>
+        <div class="ladder-text"><strong>Document Everything</strong> Write the problem, cause, and fix. This is the most skipped step — don't skip it.</div>
+      </div>
+    </div>
+    <div class="callout callout-tip" style="margin-top:16px">
+      <span class="callout-icon">💡</span>
+      <span>The best IT engineers aren't those who know the most answers — they're the ones who ask the best questions first.</span>
+    </div>
+  </div>
+</div>
+
+<!-- BINARY -->
+<div class="section-label">Week 1 · Day 4</div>
+<div class="section-title">Binary — How Computers Count</div>
+<div class="section-subtitle">Everything in computing is built on 0s and 1s. Here's why it matters.</div>
+<div class="grid grid-2" style="margin-bottom:40px">
+  <div class="card">
+    <div class="card-accent" style="background: var(--blue)"></div>
+    <h3>How to Read a Binary Number</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:16px">Each position has a value — double it going left. A "1" means "include this value."</p>
+    <div class="bit-grid">
+      <div><div class="bit bit-1">1</div><div class="bit-val">128</div></div>
+      <div><div class="bit bit-1">1</div><div class="bit-val">64</div></div>
+      <div><div class="bit bit-0">0</div><div class="bit-val">32</div></div>
+      <div><div class="bit bit-1">1</div><div class="bit-val">16</div></div>
+      <div><div class="bit bit-0">0</div><div class="bit-val">8</div></div>
+      <div><div class="bit bit-1">1</div><div class="bit-val">4</div></div>
+      <div><div class="bit bit-0">0</div><div class="bit-val">2</div></div>
+      <div><div class="bit bit-1">1</div><div class="bit-val">1</div></div>
+    </div>
+    <div style="margin-top:16px; padding:12px 16px; background:#EFF6FF; border-radius:8px; font-family:'JetBrains Mono',monospace; font-size:14px;">
+      128 + 64 + 16 + 4 + 1 = <strong style="color:var(--blue); font-size:18px">213</strong>
+    </div>
+    <div class="callout callout-tip" style="margin-top:12px">
+      <span class="callout-icon">🔑</span>
+      <span><strong>Memorise these 8 values:</strong> 128 · 64 · 32 · 16 · 8 · 4 · 2 · 1 — they appear in IP addresses, permissions, and everywhere in IT.</span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-accent" style="background: var(--teal)"></div>
+    <h3>Why Binary Matters in IT</h3>
+    <div class="info-row">
+      <div class="info-key">IP Addresses</div>
+      <div class="info-val">192.168.1.0 = 11000000.10101000.00000001.00000000 — 32 bits, 4 octets of 8 bits each</div>
+    </div>
+    <div class="info-row">
+      <div class="info-key">Subnet /24</div>
+      <div class="info-val">11111111.11111111.11111111.<strong style="color:var(--teal)">00000000</strong> — first 24 bits = network, last 8 = hosts</div>
+    </div>
+    <div class="info-row">
+      <div class="info-key">Permissions</div>
+      <div class="info-val">chmod 755 → 111 101 101 → rwx r-x r-x (r=4, w=2, x=1)</div>
+    </div>
+    <div class="info-row">
+      <div class="info-key">Hexadecimal</div>
+      <div class="info-val">FF = 1111 1111 = 255. MAC addresses and colours are hex: #1B6CA8</div>
+    </div>
+    <div class="info-row">
+      <div class="info-key">Storage Units</div>
+      <div class="info-val">1 KB = 1,024 bytes (not 1,000) · 1 MB = 1,024 KB · 1 GB = 1,024 MB</div>
+    </div>
+  </div>
+</div>
+
+<!-- OSI MODEL -->
+<div class="section-label">Week 1 · Day 5</div>
+<div class="section-title">The OSI Model</div>
+<div class="section-subtitle">7 layers that describe how data travels from one computer to another. Memorise: "All People Seem To Need Data Processing" (7→1)</div>
+<div class="card" style="margin-bottom:40px">
+  <div class="card-accent" style="background: linear-gradient(90deg,#DC2626,#D97706,#16A34A,#1B6CA8,#0D9488,#7C3AED,#0D1B2A)"></div>
+  <div style="overflow-x:auto; margin-top:8px">
+    <!-- Header row -->
+    <div style="display:grid; grid-template-columns:40px 140px 1fr 1fr 110px; gap:4px; margin-bottom:4px; padding:0 0 6px; border-bottom:2px solid var(--gray)">
+      <div style="font-size:11px;font-weight:700;color:var(--muted);font-family:'JetBrains Mono',monospace">#</div>
+      <div style="font-size:11px;font-weight:700;color:var(--muted);font-family:'JetBrains Mono',monospace">LAYER</div>
+      <div style="font-size:11px;font-weight:700;color:var(--muted);font-family:'JetBrains Mono',monospace">PROTOCOLS</div>
+      <div style="font-size:11px;font-weight:700;color:var(--muted);font-family:'JetBrains Mono',monospace">WHAT IT DOES</div>
+      <div style="font-size:11px;font-weight:700;color:var(--muted);font-family:'JetBrains Mono',monospace">DEVICE</div>
+    </div>
+    <!-- Layers -->
+    <div style="display:flex;flex-direction:column;gap:4px">
+      <div style="display:grid; grid-template-columns:40px 140px 1fr 1fr 110px; gap:4px; align-items:center; background:#FEF2F2; border-radius:8px; padding:6px 0">
+        <div class="osi-num" style="background:#DC2626; width:36px; height:36px; border-radius:6px; font-size:16px">7</div>
+        <div style="font-weight:700; font-size:14px; color:#991B1B">Application</div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#374151">HTTP · HTTPS · DNS · SSH · FTP · SMTP</div>
+        <div style="font-size:13px; color:#374151">What the user interacts with directly</div>
+        <div><span class="tag tag-red">Browser / App</span></div>
+      </div>
+      <div style="display:grid; grid-template-columns:40px 140px 1fr 1fr 110px; gap:4px; align-items:center; background:#FFF7ED; border-radius:8px; padding:6px 0">
+        <div class="osi-num" style="background:#EA580C; width:36px; height:36px; border-radius:6px; font-size:16px">6</div>
+        <div style="font-weight:700; font-size:14px; color:#9A3412">Presentation</div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#374151">SSL/TLS · MIME · JPEG</div>
+        <div style="font-size:13px; color:#374151">Encryption, compression, data translation</div>
+        <div><span class="tag tag-amber">TLS Layer</span></div>
+      </div>
+      <div style="display:grid; grid-template-columns:40px 140px 1fr 1fr 110px; gap:4px; align-items:center; background:#FFFBEB; border-radius:8px; padding:6px 0">
+        <div class="osi-num" style="background:#D97706; width:36px; height:36px; border-radius:6px; font-size:16px">5</div>
+        <div style="font-weight:700; font-size:14px; color:#92400E">Session</div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#374151">NetBIOS · RPC · SQL sessions</div>
+        <div style="font-size:13px; color:#374151">Opens, maintains, closes sessions</div>
+        <div><span class="tag tag-amber">Sessions</span></div>
+      </div>
+      <div style="display:grid; grid-template-columns:40px 140px 1fr 1fr 110px; gap:4px; align-items:center; background:#F0FDF4; border-radius:8px; padding:6px 0">
+        <div class="osi-num" style="background:#16A34A; width:36px; height:36px; border-radius:6px; font-size:16px">4</div>
+        <div style="font-weight:700; font-size:14px; color:#166534">Transport</div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#374151">TCP (reliable) · UDP (fast)</div>
+        <div style="font-size:13px; color:#374151">End-to-end delivery, ports, reliability</div>
+        <div><span class="tag tag-green">TCP / UDP</span></div>
+      </div>
+      <div style="display:grid; grid-template-columns:40px 140px 1fr 1fr 110px; gap:4px; align-items:center; background:#EFF6FF; border-radius:8px; padding:6px 0">
+        <div class="osi-num" style="background:#1B6CA8; width:36px; height:36px; border-radius:6px; font-size:16px">3</div>
+        <div style="font-weight:700; font-size:14px; color:#1E40AF">Network</div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#374151">IP · ICMP · OSPF · BGP</div>
+        <div style="font-size:13px; color:#374151">IP addressing and routing between networks</div>
+        <div><span class="tag tag-blue">Router</span></div>
+      </div>
+      <div style="display:grid; grid-template-columns:40px 140px 1fr 1fr 110px; gap:4px; align-items:center; background:#EDE9FE; border-radius:8px; padding:6px 0">
+        <div class="osi-num" style="background:#7C3AED; width:36px; height:36px; border-radius:6px; font-size:16px">2</div>
+        <div style="font-weight:700; font-size:14px; color:#5B21B6">Data Link</div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#374151">Ethernet · 802.11 WiFi · ARP · MAC</div>
+        <div style="font-size:13px; color:#374151">MAC addressing, frames, local delivery</div>
+        <div><span class="tag tag-purple">Switch</span></div>
+      </div>
+      <div style="display:grid; grid-template-columns:40px 140px 1fr 1fr 110px; gap:4px; align-items:center; background:#F8FAFC; border-radius:8px; padding:6px 0">
+        <div class="osi-num" style="background:#0D1B2A; width:36px; height:36px; border-radius:6px; font-size:16px">1</div>
+        <div style="font-weight:700; font-size:14px; color:#1E293B">Physical</div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#374151">Cables · Fibre · Radio waves · NICs</div>
+        <div style="font-size:13px; color:#374151">Actual bits on the wire — 0s and 1s</div>
+        <div><span class="tag tag-blue">Hub / Cable</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="callout callout-tip" style="margin-top:16px">
+    <span class="callout-icon">🔧</span>
+    <span><strong>Troubleshooting rule:</strong> Always work bottom-up. Check the cable (Layer 1) before blaming DNS (Layer 7). Most problems are at Layers 1–3.</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PART 2 — NETWORKING
+══════════════════════════════════════════════════════════ -->
+<div class="part-banner" style="background: linear-gradient(135deg, #0F766E, #0D9488);">
+  <div class="part-number">2</div>
+  <div class="part-text">
+    <h2>Networking Fundamentals</h2>
+    <p>TCP/IP · Subnetting · DNS · DHCP · Firewalls · Ports</p>
+  </div>
+</div>
+
+<!-- TCP vs UDP -->
+<div class="section-label">Week 6 · Day 4</div>
+<div class="section-title">TCP vs UDP</div>
+<div class="section-subtitle">Two ways data can travel — pick the right one for the job</div>
+<div class="grid grid-2" style="margin-bottom:40px">
+  <div class="card">
+    <div class="card-accent" style="background:var(--blue)"></div>
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px">
+      <div style="font-size:36px">🔒</div>
+      <div>
+        <h3 style="margin-bottom:0">TCP — Reliable</h3>
+        <div style="font-size:13px; color:var(--muted)">Transmission Control Protocol</div>
+      </div>
+    </div>
+    <div style="background:#EFF6FF; border-radius:10px; padding:16px; margin-bottom:14px">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:13px; text-align:center; margin-bottom:8px; font-weight:700; color:var(--blue)">3-WAY HANDSHAKE</div>
+      <div class="pipeline" style="justify-content:center">
+        <div class="pipe-step" style="background:#1E3A5F">SYN →</div>
+        <div class="pipe-step" style="background:#1E3A5F">← SYN-ACK</div>
+        <div class="pipe-step" style="background:#1E3A5F">ACK →</div>
+      </div>
+      <div style="text-align:center; font-size:12px; color:var(--muted); margin-top:8px">Connection established before data flows</div>
+    </div>
+    <div class="info-row"><div class="info-key">Reliable?</div><div class="info-val">✅ Yes — retransmits lost packets</div></div>
+    <div class="info-row"><div class="info-key">Ordered?</div><div class="info-val">✅ Yes — reassembles in correct order</div></div>
+    <div class="info-row"><div class="info-key">Speed</div><div class="info-val">Slower — overhead from handshake + acks</div></div>
+    <div class="info-row"><div class="info-key">Used for</div><div class="info-val">HTTP, HTTPS, SSH, FTP, databases, email</div></div>
+  </div>
+  <div class="card">
+    <div class="card-accent" style="background:var(--amber)"></div>
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px">
+      <div style="font-size:36px">⚡</div>
+      <div>
+        <h3 style="margin-bottom:0">UDP — Fast</h3>
+        <div style="font-size:13px; color:var(--muted)">User Datagram Protocol</div>
+      </div>
+    </div>
+    <div style="background:#FFFBEB; border-radius:10px; padding:16px; margin-bottom:14px">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:13px; text-align:center; margin-bottom:8px; font-weight:700; color:var(--amber)">JUST SEND IT</div>
+      <div class="pipeline" style="justify-content:center">
+        <div class="pipe-step" style="background:#78350F">Data →</div>
+        <div class="pipe-step" style="background:#78350F">Data →</div>
+        <div class="pipe-step" style="background:#78350F">Data →</div>
+      </div>
+      <div style="text-align:center; font-size:12px; color:var(--muted); margin-top:8px">No handshake — fire and forget</div>
+    </div>
+    <div class="info-row"><div class="info-key">Reliable?</div><div class="info-val">❌ No — dropped packets are gone</div></div>
+    <div class="info-row"><div class="info-key">Ordered?</div><div class="info-val">❌ No — packets may arrive out of order</div></div>
+    <div class="info-row"><div class="info-key">Speed</div><div class="info-val">Fast — minimal overhead</div></div>
+    <div class="info-row"><div class="info-key">Used for</div><div class="info-val">DNS, DHCP, video streams, VoIP, gaming</div></div>
+  </div>
+</div>
+
+<!-- SUBNETTING -->
+<div class="section-label">Week 6 · Day 1</div>
+<div class="section-title">IPv4 Subnetting</div>
+<div class="section-subtitle">Dividing a network into smaller pieces. The /number tells you how many bits are the network.</div>
+<div class="card" style="margin-bottom:40px">
+  <div class="card-accent" style="background:var(--teal)"></div>
+  <div class="grid grid-2" style="margin-top:12px">
+    <div>
+      <h3>CIDR Visual — How many bits are network vs host?</h3>
+      <div style="margin-bottom:14px">
+        <div style="font-size:12px; color:var(--muted); margin-bottom:6px; font-family:'JetBrains Mono',monospace">/24 — 254 usable hosts</div>
+        <div class="subnet-bar">
+          <div class="subnet-net" style="width:75%">NETWORK (24 bits)</div>
+          <div class="subnet-host">HOST (8 bits)</div>
+        </div>
+        <div style="font-size:12px; color:var(--muted); margin-bottom:6px; font-family:'JetBrains Mono',monospace">/25 — 126 usable hosts</div>
+        <div class="subnet-bar">
+          <div class="subnet-net" style="width:78.125%">NETWORK (25 bits)</div>
+          <div class="subnet-host">HOST (7)</div>
+        </div>
+        <div style="font-size:12px; color:var(--muted); margin-bottom:6px; font-family:'JetBrains Mono',monospace">/26 — 62 usable hosts</div>
+        <div class="subnet-bar">
+          <div class="subnet-net" style="width:81.25%">NETWORK (26 bits)</div>
+          <div class="subnet-host">HOST(6)</div>
+        </div>
+        <div style="font-size:12px; color:var(--muted); margin-bottom:6px; font-family:'JetBrains Mono',monospace">/30 — 2 usable hosts (point-to-point links)</div>
+        <div class="subnet-bar">
+          <div class="subnet-net" style="width:93.75%">NETWORK (30 bits)</div>
+          <div class="subnet-host" style="min-width:40px">2</div>
+        </div>
+      </div>
+      <div class="callout callout-tip">
+        <span class="callout-icon">🧮</span>
+        <span><strong>Formula:</strong> Usable hosts = 2^(host bits) − 2<br>/26 has 6 host bits → 2⁶ − 2 = <strong>62 hosts</strong></span>
+      </div>
+    </div>
+    <div>
+      <h3>Key Subnets to Memorise</h3>
+      <table class="compare-table">
+        <tr><th>CIDR</th><th>Mask</th><th>Hosts</th><th>Use Case</th></tr>
+        <tr><td class="highlight">/8</td><td>255.0.0.0</td><td>16.7M</td><td>ISP, Class A</td></tr>
+        <tr><td class="highlight">/16</td><td>255.255.0.0</td><td>65,534</td><td>Large enterprise</td></tr>
+        <tr><td class="highlight">/24</td><td>255.255.255.0</td><td>254</td><td>Office network</td></tr>
+        <tr><td class="highlight">/25</td><td>255.255.255.128</td><td>126</td><td>Half of /24</td></tr>
+        <tr><td class="highlight">/26</td><td>255.255.255.192</td><td>62</td><td>Small team</td></tr>
+        <tr><td class="highlight">/27</td><td>255.255.255.224</td><td>30</td><td>VLAN segment</td></tr>
+        <tr><td class="highlight">/30</td><td>255.255.255.252</td><td>2</td><td>Router links</td></tr>
+      </table>
+      <div style="margin-top:12px; padding:12px; background:var(--gray); border-radius:8px">
+        <div style="font-size:12px; font-weight:700; margin-bottom:8px; font-family:'JetBrains Mono',monospace; color:var(--navy)">PRIVATE IP RANGES (not routable on internet)</div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:13px; line-height:1.8">
+          10.0.0.0/8 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; → 10.x.x.x<br>
+          172.16.0.0/12 &nbsp;→ 172.16–31.x.x<br>
+          192.168.0.0/16 → 192.168.x.x
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DNS -->
+<div class="section-label">Week 6 · Day 2</div>
+<div class="section-title">DNS — How Names Become IPs</div>
+<div class="section-subtitle">The phone book of the internet. Every website visit uses DNS.</div>
+<div class="grid grid-2" style="margin-bottom:40px">
+  <div class="card">
+    <div class="card-accent" style="background:var(--purple)"></div>
+    <h3>DNS Resolution Flow</h3>
+    <div class="ladder">
+      <div class="ladder-item" style="background:#F8F7FF">
+        <div class="ladder-num" style="background:#7C3AED">1</div>
+        <div class="ladder-text"><strong>Check hosts file</strong> /etc/hosts — if the name is here, use it. No DNS needed.</div>
+      </div>
+      <div class="ladder-spacer"></div>
+      <div class="ladder-item" style="background:#EDE9FE">
+        <div class="ladder-num" style="background:#6D28D9">2</div>
+        <div class="ladder-text"><strong>Check local cache</strong> Already looked this up recently? Use the cached answer.</div>
+      </div>
+      <div class="ladder-spacer"></div>
+      <div class="ladder-item" style="background:#F8F7FF">
+        <div class="ladder-num" style="background:#5B21B6">3</div>
+        <div class="ladder-text"><strong>Query DNS resolver</strong> Your configured DNS server (from DHCP or manual config).</div>
+      </div>
+      <div class="ladder-spacer"></div>
+      <div class="ladder-item" style="background:#EDE9FE">
+        <div class="ladder-num" style="background:#4C1D95">4</div>
+        <div class="ladder-text"><strong>Resolver asks Root NS</strong> Roots direct to .com, .org, .uk TLD servers.</div>
+      </div>
+      <div class="ladder-spacer"></div>
+      <div class="ladder-item" style="background:#F8F7FF">
+        <div class="ladder-num" style="background:#7C3AED">5</div>
+        <div class="ladder-text"><strong>TLD → Authoritative NS</strong> Google's own nameservers return the IP. Cached and returned.</div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-accent" style="background:var(--purple)"></div>
+    <h3>DNS Record Types</h3>
+    <div class="info-row">
+      <div class="info-key" style="min-width:60px"><span class="tag tag-purple">A</span></div>
+      <div class="info-val"><strong>Address</strong> — maps hostname → IPv4.<br><code style="font-size:12px; background:var(--gray); padding:2px 6px; border-radius:4px">www → 93.184.216.34</code></div>
+    </div>
+    <div class="info-row">
+      <div class="info-key" style="min-width:60px"><span class="tag tag-blue">AAAA</span></div>
+      <div class="info-val"><strong>Quad-A</strong> — maps hostname → IPv6</div>
+    </div>
+    <div class="info-row">
+      <div class="info-key" style="min-width:60px"><span class="tag tag-green">CNAME</span></div>
+      <div class="info-val"><strong>Alias</strong> — points one name to another.<br><code style="font-size:12px; background:var(--gray); padding:2px 6px; border-radius:4px">mail.co → co.com</code></div>
+    </div>
+    <div class="info-row">
+      <div class="info-key" style="min-width:60px"><span class="tag tag-amber">MX</span></div>
+      <div class="info-val"><strong>Mail Exchanger</strong> — which server handles email for this domain</div>
+    </div>
+    <div class="info-row">
+      <div class="info-key" style="min-width:60px"><span class="tag tag-teal">PTR</span></div>
+      <div class="info-val"><strong>Reverse DNS</strong> — IP → hostname. Used by mail servers to verify senders.</div>
+    </div>
+    <div class="info-row">
+      <div class="info-key" style="min-width:60px"><span class="tag tag-red">TTL</span></div>
+      <div class="info-val"><strong>Time To Live</strong> — how long resolvers cache this record (in seconds). Lower before IP changes!</div>
+    </div>
+    <div class="code-block" style="margin-top:14px">
+      <span class="cmt"># Test DNS from command line</span><br>
+      <span class="cmd">dig google.com A</span><span class="cmt">        # Linux/macOS</span><br>
+      <span class="cmd">nslookup google.com</span><span class="cmt">    # Windows</span><br>
+      <span class="cmd">dig @8.8.8.8 google.com</span><span class="cmt">  # Query specific server</span>
+    </div>
+  </div>
+</div>
+
+<!-- KEY PORTS -->
+<div class="section-label">Week 6 · Day 3</div>
+<div class="section-title">Essential Ports to Memorise</div>
+<div class="section-subtitle">Every network service listens on a port number. Firewalls use ports to allow or block traffic.</div>
+<div class="grid grid-4" style="margin-bottom:40px">
+  <div class="card" style="padding:20px">
+    <div class="card-accent" style="background:var(--blue)"></div>
+    <div style="font-family:'Syne',sans-serif; font-size:13px; font-weight:800; color:var(--muted); letter-spacing:2px; text-transform:uppercase; margin-bottom:12px; margin-top:4px">Remote Access</div>
+    <div class="info-row"><div class="info-key" style="min-width:50px"><span class="tag tag-blue">22</span></div><div class="info-val">SSH — encrypted remote access</div></div>
+    <div class="info-row"><div class="info-key" style="min-width:50px"><span class="tag tag-red">23</span></div><div class="info-val">Telnet — unencrypted. Never use.</div></div>
+    <div class="info-row"><div class="info-key" style="min-width:50px"><span class="tag tag-blue">3389</span></div><div class="info-val">RDP — Windows Remote Desktop</div></div>
+  </div>
+  <div class="card" style="padding:20px">
+    <div class="card-accent" style="background:var(--green)"></div>
+    <div style="font-family:'Syne',sans-serif; font-size:13px; font-weight:800; color:var(--muted); letter-spacing:2px; text-transform:uppercase; margin-bottom:12px; margin-top:4px">Web Traffic</div>
+    <div class="info-row"><div class="info-key" style="min-width:50px"><span class="tag tag-amber">80</span></div><div class="info-val">HTTP — unencrypted web</div></div>
+    <div class="info-row"><div class="info-key" style="min-width:50px"><span class="tag tag-green">443</span></div><div class="info-val">HTTPS — encrypted web (TLS)</div></div>
+    <div class="info-row"><div class="info-key" style="min-width:50px"><span class="tag tag-blue">8080</span></div><div class="info-val">HTTP alternate / proxy</div></div>
+  </div>
+  <div class="card" style="padding:20px">
+    <div class="card-accent" style="background:var(--purple)"></div>
+    <div style="font-family:'Syne',sans-serif; font-size:13px; font-weight:800; color:var(--muted); letter-spacing:2px; text-transform:uppercase; margin-bottom:12px; margin-top:4px">Infrastructure</div>
+    <div class="info-row"><div class="info-key" style="min-width:50px"><span class="tag tag-purple">53</span></div><div class="info-val">DNS — name resolution</div></div>
+    <div class="info-row"><div class="info-key" style="min-width:50px"><span class="tag tag-teal">67/68</span></div><div class="info-val">DHCP — auto IP assignment</div></div>
+    <div class="info-row"><div class="info-key" style="min-width:50px"><span class="tag tag-blue">389</span></div><div class="info-val">LDAP — Active Directory</div></div>
+    <div class="info-row"><div class="info-key" style="min-width:50px"><span class="tag tag-blue">445</span></div><div class="info-val">SMB — Windows file shares</div></div>
+  </div>
+  <div class="card" style="padding:20px">
+    <div class="card-accent" style="background:var(--amber)"></div>
+    <div style="font-family:'Syne',sans-serif; font-size:13px; font-weight:800; color:var(--muted); letter-spacing:2px; text-transform:uppercase; margin-bottom:12px; margin-top:4px">Databases</div>
+    <div class="info-row"><div class="info-key" style="min-width:50px"><span class="tag tag-amber">3306</span></div><div class="info-val">MySQL / MariaDB</div></div>
+    <div class="info-row"><div class="info-key" style="min-width:50px"><span class="tag tag-blue">5432</span></div><div class="info-val">PostgreSQL</div></div>
+    <div class="info-row"><div class="info-key" style="min-width:50px"><span class="tag tag-green">6379</span></div><div class="info-val">Redis cache</div></div>
+    <div class="info-row"><div class="info-key" style="min-width:50px"><span class="tag tag-purple">27017</span></div><div class="info-val">MongoDB</div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PART 3 — LINUX
+══════════════════════════════════════════════════════════ -->
+<div class="part-banner" style="background: linear-gradient(135deg, #166534, #16A34A);">
+  <div class="part-number">3</div>
+  <div class="part-text">
+    <h2>Linux Administration</h2>
+    <p>Filesystem · Commands · Permissions · Services · Scripting</p>
+  </div>
+</div>
+
+<!-- LINUX FILESYSTEM -->
+<div class="section-label">Week 4 · Day 1</div>
+<div class="section-title">Linux Filesystem Hierarchy</div>
+<div class="section-subtitle">Every Linux system looks the same — because of the FHS standard. Know where everything lives.</div>
+<div class="grid grid-2" style="margin-bottom:40px">
+  <div class="card">
+    <div class="card-accent" style="background:var(--green)"></div>
+    <h3>Key Directories</h3>
+    <div class="info-row">
+      <div class="info-key" style="font-size:15px; min-width:80px">/etc</div>
+      <div class="info-val"><strong>⭐ Most important.</strong> All system config files. nginx → /etc/nginx/. SSH → /etc/ssh/sshd_config</div>
+    </div>
+    <div class="info-row">
+      <div class="info-key" style="font-size:15px; min-width:80px">/var/log</div>
+      <div class="info-val"><strong>All log files.</strong> syslog, auth.log, nginx/access.log. Check here when things break.</div>
+    </div>
+    <div class="info-row">
+      <div class="info-key" style="font-size:15px; min-width:80px">/home</div>
+      <div class="info-val">User home directories. /home/alice, /home/bob. Your personal files live here.</div>
+    </div>
+    <div class="info-row">
+      <div class="info-key" style="font-size:15px; min-width:80px">/tmp</div>
+      <div class="info-val">Temporary files — cleared on reboot. Safe to use for scratch files.</div>
+    </div>
+    <div class="info-row">
+      <div class="info-key" style="font-size:15px; min-width:80px">/usr/bin</div>
+      <div class="info-val">User programs: ls, cat, grep, python3, nginx, git. Your PATH points here.</div>
+    </div>
+    <div class="info-row">
+      <div class="info-key" style="font-size:15px; min-width:80px">/proc</div>
+      <div class="info-val">Virtual filesystem. /proc/cpuinfo, /proc/meminfo — live kernel data. Not real files.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-accent" style="background:var(--green)"></div>
+    <h3>Linux Permissions — Reading rwxr-xr--</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:16px">Every file has 10 characters: type + 3 sets of 3 permissions (owner / group / others)</p>
+    <div style="font-family:'JetBrains Mono',monospace; font-size:22px; font-weight:700; text-align:center; margin-bottom:16px; letter-spacing:3px; color:var(--navy)">
+      <span style="color:var(--muted)">-</span><span style="color:var(--blue)">rwx</span><span style="color:var(--green)">r-x</span><span style="color:var(--amber)">r--</span>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:16px">
+      <div style="background:#EFF6FF; border-radius:8px; padding:10px; text-align:center">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:20px; font-weight:700; color:var(--blue)">rwx</div>
+        <div style="font-size:12px; color:var(--muted); margin-top:4px">Owner<br>Read+Write+Execute</div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; color:var(--blue); margin-top:4px">= 7</div>
+      </div>
+      <div style="background:#F0FDF4; border-radius:8px; padding:10px; text-align:center">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:20px; font-weight:700; color:var(--green)">r-x</div>
+        <div style="font-size:12px; color:var(--muted); margin-top:4px">Group<br>Read+Execute</div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; color:var(--green); margin-top:4px">= 5</div>
+      </div>
+      <div style="background:#FFFBEB; border-radius:8px; padding:10px; text-align:center">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:20px; font-weight:700; color:var(--amber)">r--</div>
+        <div style="font-size:12px; color:var(--muted); margin-top:4px">Others<br>Read only</div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; color:var(--amber); margin-top:4px">= 4</div>
+      </div>
+    </div>
+    <table class="compare-table">
+      <tr><th>chmod value</th><th>Permissions</th><th>Use case</th></tr>
+      <tr><td class="highlight">755</td><td>rwxr-xr-x</td><td>Scripts, directories</td></tr>
+      <tr><td class="highlight">644</td><td>rw-r--r--</td><td>Config files, HTML</td></tr>
+      <tr><td class="highlight">600</td><td>rw-------</td><td>SSH private keys</td></tr>
+      <tr><td class="highlight">700</td><td>rwx------</td><td>Private scripts</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PART 4 — WINDOWS SERVER / ACTIVE DIRECTORY
+══════════════════════════════════════════════════════════ -->
+<div class="part-banner" style="background: linear-gradient(135deg, #1E3A5F, #1B6CA8);">
+  <div class="part-number">4</div>
+  <div class="part-text">
+    <h2>Windows Server & Active Directory</h2>
+    <p>AD DS · Domain Controllers · GPO · DNS · DHCP</p>
+  </div>
+</div>
+
+<!-- AD ARCHITECTURE -->
+<div class="section-label">Week 3 · Day 2</div>
+<div class="section-title">Active Directory Architecture</div>
+<div class="section-subtitle">The brain of every Windows enterprise network</div>
+<div class="grid grid-2" style="margin-bottom:40px">
+  <div class="card">
+    <div class="card-accent" style="background:var(--blue)"></div>
+    <h3>How AD is Structured</h3>
+    <div style="background:#EFF6FF; border-radius:10px; padding:16px; font-family:'JetBrains Mono',monospace; font-size:13px; line-height:2">
+      <div><strong style="color:var(--blue)">FOREST</strong>: company.com &nbsp;<span style="color:var(--muted); font-size:11px">(top level)</span></div>
+      <div style="padding-left:20px">└── <strong style="color:#1E40AF">DOMAIN</strong>: company.com</div>
+      <div style="padding-left:40px">├── DC01, DC02 <span style="color:var(--muted); font-size:11px">(Domain Controllers)</span></div>
+      <div style="padding-left:40px">├── <strong style="color:var(--teal)">OU</strong>: London</div>
+      <div style="padding-left:60px">├── <strong style="color:var(--green)">Users</strong>: Alice, Bob</div>
+      <div style="padding-left:60px">└── <strong style="color:var(--green)">Computers</strong>: LDN-PC-001</div>
+      <div style="padding-left:40px">├── <strong style="color:var(--teal)">OU</strong>: Manchester</div>
+      <div style="padding-left:40px">└── <strong style="color:var(--teal)">OU</strong>: Servers</div>
+    </div>
+    <div class="callout callout-tip" style="margin-top:12px">
+      <span class="callout-icon">💡</span>
+      <span><strong>OUs</strong> (Organisational Units) are folders for AD objects. You link Group Policies to OUs to apply settings to all objects inside.</span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-accent" style="background:var(--blue)"></div>
+    <h3>AGDLP — The Permissions Model</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:16px">Never assign permissions directly to user accounts. Use groups.</p>
+    <div style="display:flex; flex-direction:column; gap:8px">
+      <div style="background:#EFF6FF; border-radius:8px; padding:12px; display:flex; align-items:center; gap:12px">
+        <div style="background:var(--blue); color:#fff; border-radius:6px; padding:4px 10px; font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; min-width:28px; text-align:center">A</div>
+        <div><strong style="font-size:14px">Accounts</strong> (User accounts — Alice, Bob)</div>
+      </div>
+      <div style="text-align:center; color:var(--muted)">↓ add to</div>
+      <div style="background:#F0FDF4; border-radius:8px; padding:12px; display:flex; align-items:center; gap:12px">
+        <div style="background:var(--green); color:#fff; border-radius:6px; padding:4px 10px; font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; min-width:28px; text-align:center">G</div>
+        <div><strong style="font-size:14px">Global Groups</strong> (GG_Finance_Staff)</div>
+      </div>
+      <div style="text-align:center; color:var(--muted)">↓ nested into</div>
+      <div style="background:#FEF3C7; border-radius:8px; padding:12px; display:flex; align-items:center; gap:12px">
+        <div style="background:var(--amber); color:#fff; border-radius:6px; padding:4px 10px; font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; min-width:28px; text-align:center">DL</div>
+        <div><strong style="font-size:14px">Domain Local Groups</strong> (DL_Finance_Read)</div>
+      </div>
+      <div style="text-align:center; color:var(--muted)">↓ gets</div>
+      <div style="background:#FEE2E2; border-radius:8px; padding:12px; display:flex; align-items:center; gap:12px">
+        <div style="background:var(--red); color:#fff; border-radius:6px; padding:4px 10px; font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; min-width:28px; text-align:center">P</div>
+        <div><strong style="font-size:14px">Permissions</strong> on the resource (Finance Share: Read)</div>
+      </div>
+    </div>
+    <div class="callout callout-success" style="margin-top:12px">
+      <span class="callout-icon">✅</span>
+      <span>To give Alice access: add her to GG_Finance_Staff. That's it — one action, permissions flow automatically.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PART 5 — DOCKER & KUBERNETES
+══════════════════════════════════════════════════════════ -->
+<div class="part-banner" style="background: linear-gradient(135deg, #0A4A8A, #0D9488);">
+  <div class="part-number">5</div>
+  <div class="part-text">
+    <h2>Containers & Orchestration</h2>
+    <p>Docker · Images · Containers · Compose · Kubernetes</p>
+  </div>
+</div>
+
+<!-- VMs vs Containers -->
+<div class="section-label">Week 9 · Day 6</div>
+<div class="section-title">VMs vs Containers</div>
+<div class="section-subtitle">Two ways to isolate workloads — different trade-offs</div>
+<div class="grid grid-2" style="margin-bottom:40px">
+  <div class="card">
+    <div class="card-accent" style="background:#1B6CA8"></div>
+    <h3>🖥️ Virtual Machine</h3>
+    <div class="docker-stack">
+      <div class="docker-layer" style="background:#1B6CA8; color:#fff">Your Application</div>
+      <div class="docker-layer" style="background:#1E5FA8; color:#fff">Guest OS (full OS — Ubuntu, Windows)</div>
+      <div class="docker-layer" style="background:#4A90D9; color:#fff">Hypervisor (VMware, Hyper-V)</div>
+      <div class="docker-layer" style="background:#0D1B2A; color:#94A3B8">Physical Hardware</div>
+    </div>
+    <div class="info-row" style="margin-top:14px"><div class="info-key">Startup</div><div class="info-val">30 seconds to minutes</div></div>
+    <div class="info-row"><div class="info-key">RAM overhead</div><div class="info-val">1–4 GB per VM (full OS)</div></div>
+    <div class="info-row"><div class="info-key">Isolation</div><div class="info-val">✅ Strong — separate kernel</div></div>
+    <div class="info-row"><div class="info-key">Best for</div><div class="info-val">Mixed OS, legacy apps, max security</div></div>
+  </div>
+  <div class="card">
+    <div class="card-accent" style="background:#0D9488"></div>
+    <h3>🐳 Container</h3>
+    <div class="docker-stack">
+      <div class="docker-layer" style="background:#0D9488; color:#fff">Your Application + Libraries</div>
+      <div class="docker-layer" style="background:#0F766E; color:#fff">Container Runtime (Docker)</div>
+      <div class="docker-layer" style="background:#065F46; color:#fff">Host OS Kernel (shared!)</div>
+      <div class="docker-layer" style="background:#0D1B2A; color:#94A3B8">Physical Hardware</div>
+    </div>
+    <div class="info-row" style="margin-top:14px"><div class="info-key">Startup</div><div class="info-val">Milliseconds</div></div>
+    <div class="info-row"><div class="info-key">RAM overhead</div><div class="info-val">50–200 MB (no full OS)</div></div>
+    <div class="info-row"><div class="info-key">Isolation</div><div class="info-val">⚠️ Weaker — shared kernel</div></div>
+    <div class="info-row"><div class="info-key">Best for</div><div class="info-val">Microservices, CI/CD, rapid scaling</div></div>
+  </div>
+</div>
+
+<!-- DOCKER CONCEPTS -->
+<div class="section-label">Week 9 · Day 2</div>
+<div class="section-title">Docker Core Concepts</div>
+<div class="grid grid-3" style="margin-bottom:40px">
+  <div class="card" style="text-align:center">
+    <div class="card-accent" style="background:#2496ED"></div>
+    <div class="card-icon">📄</div>
+    <h3>Dockerfile</h3>
+    <p style="font-size:14px; color:var(--muted); margin-bottom:12px">A recipe. Text file with instructions to build an image.</p>
+    <div class="code-block" style="text-align:left">
+      <span class="var">FROM</span> <span class="str">python:3.11-slim</span><br>
+      <span class="var">WORKDIR</span> <span class="str">/app</span><br>
+      <span class="var">COPY</span> <span class="str">requirements.txt .</span><br>
+      <span class="var">RUN</span> <span class="cmd">pip install -r requirements.txt</span><br>
+      <span class="var">COPY</span> <span class="str">. .</span><br>
+      <span class="var">CMD</span> <span class="str">["python", "app.py"]</span>
+    </div>
+  </div>
+  <div class="card" style="text-align:center">
+    <div class="card-accent" style="background:#2496ED"></div>
+    <div class="card-icon">🖼️</div>
+    <h3>Image</h3>
+    <p style="font-size:14px; color:var(--muted); margin-bottom:12px">A read-only template built from a Dockerfile. Like a class in code.</p>
+    <div class="code-block" style="text-align:left">
+      <span class="cmt"># Build image</span><br>
+      <span class="cmd">docker build -t myapp:v1 .</span><br><br>
+      <span class="cmt"># List images</span><br>
+      <span class="cmd">docker images</span><br><br>
+      <span class="cmt"># Pull from Docker Hub</span><br>
+      <span class="cmd">docker pull nginx:latest</span>
+    </div>
+  </div>
+  <div class="card" style="text-align:center">
+    <div class="card-accent" style="background:#2496ED"></div>
+    <div class="card-icon">📦</div>
+    <h3>Container</h3>
+    <p style="font-size:14px; color:var(--muted); margin-bottom:12px">A running instance of an image. Like an object from a class.</p>
+    <div class="code-block" style="text-align:left">
+      <span class="cmt"># Run a container</span><br>
+      <span class="cmd">docker run -d -p 80:80 \<br>&nbsp;&nbsp;--name web nginx</span><br><br>
+      <span class="cmt"># Shell into it</span><br>
+      <span class="cmd">docker exec -it web bash</span><br><br>
+      <span class="cmt"># See logs</span><br>
+      <span class="cmd">docker logs -f web</span>
+    </div>
+  </div>
+</div>
+
+<!-- KUBERNETES -->
+<div class="section-label">Week 9 · Day 5</div>
+<div class="section-title">Kubernetes Architecture</div>
+<div class="section-subtitle">Kubernetes manages containers at scale — it's the OS for your containers</div>
+<div class="card" style="margin-bottom:40px">
+  <div class="card-accent" style="background: linear-gradient(90deg, #326CE5, #0D9488)"></div>
+  <div class="grid grid-2" style="margin-top:12px">
+    <div>
+      <div class="k8s-box" style="border-color:#326CE5; background:#EEF2FF">
+        <div class="k8s-label" style="color:#326CE5">Control Plane — The Brain</div>
+        <div class="k8s-items">
+          <div class="k8s-item" style="background:#326CE5; color:#fff">API Server</div>
+          <div class="k8s-item" style="background:#4338CA; color:#fff">etcd (data store)</div>
+          <div class="k8s-item" style="background:#5B21B6; color:#fff">Scheduler</div>
+          <div class="k8s-item" style="background:#6D28D9; color:#fff">Controllers</div>
+        </div>
+        <p style="font-size:12px; color:var(--muted); margin-top:10px">All kubectl commands go through the API Server. etcd stores the entire cluster state.</p>
+      </div>
+      <div style="display:flex; gap:8px; margin-top:8px">
+        <div class="k8s-box" style="border-color:#0D9488; background:#F0FDFA; flex:1">
+          <div class="k8s-label" style="color:#0D9488">Worker Node</div>
+          <div class="k8s-items">
+            <div class="k8s-item" style="background:#0D9488; color:#fff">Pod</div>
+            <div class="k8s-item" style="background:#0F766E; color:#fff">Pod</div>
+          </div>
+          <div style="font-size:11px; color:var(--muted); margin-top:6px">kubelet · kube-proxy</div>
+        </div>
+        <div class="k8s-box" style="border-color:#0D9488; background:#F0FDFA; flex:1">
+          <div class="k8s-label" style="color:#0D9488">Worker Node</div>
+          <div class="k8s-items">
+            <div class="k8s-item" style="background:#0D9488; color:#fff">Pod</div>
+          </div>
+          <div style="font-size:11px; color:var(--muted); margin-top:6px">kubelet · kube-proxy</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h3>Core Objects</h3>
+      <div class="info-row">
+        <div class="info-key"><span class="tag tag-blue">Pod</span></div>
+        <div class="info-val">Smallest unit — 1+ containers sharing a network. Ephemeral (can be replaced anytime).</div>
+      </div>
+      <div class="info-row">
+        <div class="info-key"><span class="tag tag-teal">Deployment</span></div>
+        <div class="info-val">Manages replicas of a Pod. Ensures N copies always run. Handles rolling updates.</div>
+      </div>
+      <div class="info-row">
+        <div class="info-key"><span class="tag tag-green">Service</span></div>
+        <div class="info-val">Stable IP/DNS for accessing Pods. Load-balances across replicas.</div>
+      </div>
+      <div class="info-row">
+        <div class="info-key"><span class="tag tag-purple">ConfigMap</span></div>
+        <div class="info-val">Stores config data (non-sensitive) as key-value pairs injected into Pods.</div>
+      </div>
+      <div class="info-row">
+        <div class="info-key"><span class="tag tag-red">Secret</span></div>
+        <div class="info-val">Stores sensitive data (passwords, API keys) base64-encoded.</div>
+      </div>
+      <div class="code-block" style="margin-top:12px">
+        <span class="cmd">kubectl get pods -A</span><span class="cmt">       # all pods</span><br>
+        <span class="cmd">kubectl describe pod name</span><span class="cmt">  # debug</span><br>
+        <span class="cmd">kubectl logs pod-name -f</span><span class="cmt">   # follow logs</span><br>
+        <span class="cmd">kubectl scale deploy app \<br>&nbsp;&nbsp;--replicas=5</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PART 6 — CLOUD
+══════════════════════════════════════════════════════════ -->
+<div class="part-banner" style="background: linear-gradient(135deg, #FF9900 0%, #C7511F 100%);">
+  <div class="part-number">6</div>
+  <div class="part-text">
+    <h2>Cloud Computing</h2>
+    <p>IaaS · PaaS · SaaS · AWS · Azure · IAM · S3 · EC2</p>
+  </div>
+</div>
+
+<!-- CLOUD SERVICE MODELS -->
+<div class="section-label">Week 8 · Day 1</div>
+<div class="section-title">Cloud Service Models</div>
+<div class="section-subtitle">How much YOU manage vs how much the cloud provider manages</div>
+<div class="grid grid-3" style="margin-bottom:40px">
+  <div class="card">
+    <div class="card-accent" style="background:#DC2626"></div>
+    <h3 style="color:#991B1B">🏗️ IaaS</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:14px">Infrastructure as a Service</p>
+    <div class="docker-stack">
+      <div class="docker-layer" style="background:#FEE2E2; color:#7F1D1D; border:2px dashed #DC2626">Your App ← YOU manage</div>
+      <div class="docker-layer" style="background:#FEE2E2; color:#7F1D1D; border:2px dashed #DC2626">OS ← YOU manage</div>
+      <div class="docker-layer" style="background:#DC2626; color:#fff">VM / Compute ← AWS</div>
+      <div class="docker-layer" style="background:#991B1B; color:#fff">Physical HW ← AWS</div>
+    </div>
+    <p style="font-size:13px; margin-top:12px; color:#374151">Examples: EC2, Azure VMs. Most control, most responsibility.</p>
+  </div>
+  <div class="card">
+    <div class="card-accent" style="background:#D97706"></div>
+    <h3 style="color:#92400E">🔧 PaaS</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:14px">Platform as a Service</p>
+    <div class="docker-stack">
+      <div class="docker-layer" style="background:#FEF3C7; color:#78350F; border:2px dashed #D97706">Your App ← YOU manage</div>
+      <div class="docker-layer" style="background:#D97706; color:#fff">Runtime ← Provider</div>
+      <div class="docker-layer" style="background:#B45309; color:#fff">OS ← Provider</div>
+      <div class="docker-layer" style="background:#92400E; color:#fff">Hardware ← Provider</div>
+    </div>
+    <p style="font-size:13px; margin-top:12px; color:#374151">Examples: Elastic Beanstalk, Azure App Service, Heroku.</p>
+  </div>
+  <div class="card">
+    <div class="card-accent" style="background:#16A34A"></div>
+    <h3 style="color:#166534">☁️ SaaS</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:14px">Software as a Service</p>
+    <div class="docker-stack">
+      <div class="docker-layer" style="background:#16A34A; color:#fff">Application ← Provider</div>
+      <div class="docker-layer" style="background:#15803D; color:#fff">Runtime ← Provider</div>
+      <div class="docker-layer" style="background:#166534; color:#fff">OS ← Provider</div>
+      <div class="docker-layer" style="background:#14532D; color:#fff">Hardware ← Provider</div>
+    </div>
+    <p style="font-size:13px; margin-top:12px; color:#374151">Examples: Gmail, Office 365, Salesforce. Just use it.</p>
+  </div>
+</div>
+
+<!-- AWS CORE SERVICES -->
+<div class="section-label">Week 8 · Day 2–3</div>
+<div class="section-title">AWS Core Services</div>
+<div class="grid grid-2" style="margin-bottom:40px">
+  <div class="card">
+    <div class="card-accent" style="background:#FF9900"></div>
+    <h3>Essential Services Map</h3>
+    <div class="info-row"><div class="info-key"><span class="tag tag-amber">EC2</span></div><div class="info-val"><strong>Virtual Machines.</strong> Choose instance type (CPU/RAM), OS image (AMI), storage. Pay per second.</div></div>
+    <div class="info-row"><div class="info-key"><span class="tag tag-amber">S3</span></div><div class="info-val"><strong>Object Storage.</strong> Store any file. 11 nines durability. Pay per GB. Hosts static websites.</div></div>
+    <div class="info-row"><div class="info-key"><span class="tag tag-amber">VPC</span></div><div class="info-val"><strong>Your Private Network.</strong> Subnets, route tables, internet gateway. Your network in the cloud.</div></div>
+    <div class="info-row"><div class="info-key"><span class="tag tag-amber">IAM</span></div><div class="info-val"><strong>Identity & Access.</strong> Users, groups, roles, policies. Who can do what.</div></div>
+    <div class="info-row"><div class="info-key"><span class="tag tag-amber">RDS</span></div><div class="info-val"><strong>Managed Databases.</strong> MySQL, PostgreSQL. Automatic backups, patching, Multi-AZ failover.</div></div>
+    <div class="info-row"><div class="info-key"><span class="tag tag-amber">Lambda</span></div><div class="info-val"><strong>Serverless Functions.</strong> Run code in response to events. Pay only for execution time.</div></div>
+    <div class="info-row"><div class="info-key"><span class="tag tag-amber">CloudTrail</span></div><div class="info-val"><strong>Audit Log.</strong> Every API call recorded. Essential for security investigations.</div></div>
+  </div>
+  <div class="card">
+    <div class="card-accent" style="background:#FF9900"></div>
+    <h3>AWS Shared Responsibility Model</h3>
+    <div style="border-radius:10px; overflow:hidden; margin-bottom:14px">
+      <div style="background:#FF9900; color:#fff; padding:12px 16px; font-weight:700; font-size:14px">☁️ AWS is responsible FOR the cloud</div>
+      <div style="background:#FFF7ED; padding:12px 16px; font-size:13px; border:1px solid #FED7AA">
+        Physical data centres · Hardware · Hypervisor · Network infrastructure · Managed service infrastructure
+      </div>
+      <div style="background:#DC2626; color:#fff; padding:12px 16px; font-weight:700; font-size:14px; margin-top:4px">🔐 YOU are responsible IN the cloud</div>
+      <div style="background:#FEF2F2; padding:12px 16px; font-size:13px; border:1px solid #FECACA">
+        OS configuration · Application code · Data encryption · IAM policies · Security Groups · Network ACLs
+      </div>
+    </div>
+    <div class="callout callout-danger">
+      <span class="callout-icon">⚠️</span>
+      <span><strong>A misconfigured S3 bucket exposing private data is YOUR fault</strong> — not AWS's. AWS provides the secure infrastructure; you are responsible for configuring it correctly.</span>
+    </div>
+    <div class="callout callout-warn" style="margin-top:8px">
+      <span class="callout-icon">🔑</span>
+      <span><strong>Never commit AWS access keys to GitHub.</strong> Automated scanners find them within minutes and will use them to run up huge bills.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PART 7 — CYBERSECURITY
+══════════════════════════════════════════════════════════ -->
+<div class="part-banner" style="background: linear-gradient(135deg, #7F1D1D, #DC2626);">
+  <div class="part-number">7</div>
+  <div class="part-text">
+    <h2>Cybersecurity Fundamentals</h2>
+    <p>CIA Triad · Attack Types · Encryption · MFA · Incident Response</p>
+  </div>
+</div>
+
+<!-- CIA TRIAD -->
+<div class="section-label">Week 11 · Day 1</div>
+<div class="section-title">The CIA Triad</div>
+<div class="section-subtitle">Every security decision maps back to one of these three principles</div>
+<div class="grid grid-3" style="margin-bottom:40px">
+  <div class="cia-card" style="background:linear-gradient(135deg,#1E3A5F,#1B6CA8)">
+    <div class="cia-icon">🔒</div>
+    <div class="cia-title">Confidentiality</div>
+    <div class="cia-def">Only authorised people can read the data</div>
+    <div class="cia-examples">Controls: Encryption, MFA, access controls, least privilege<br><br>Violated by: Data breaches, eavesdropping, exposed API keys</div>
+  </div>
+  <div class="cia-card" style="background:linear-gradient(135deg,#166534,#16A34A)">
+    <div class="cia-icon">✅</div>
+    <div class="cia-title">Integrity</div>
+    <div class="cia-def">Data has not been tampered with or altered</div>
+    <div class="cia-examples">Controls: Hashing, digital signatures, audit logs, version control<br><br>Violated by: Man-in-the-middle attacks, file corruption, unauthorised edits</div>
+  </div>
+  <div class="cia-card" style="background:linear-gradient(135deg,#7C3AED,#6D28D9)">
+    <div class="cia-icon">⏱️</div>
+    <div class="cia-title">Availability</div>
+    <div class="cia-def">Systems are accessible when legitimate users need them</div>
+    <div class="cia-examples">Controls: Redundancy, backups, load balancing, DDoS protection<br><br>Violated by: DDoS attacks, ransomware, hardware failures</div>
+  </div>
+</div>
+
+<!-- ENCRYPTION -->
+<div class="section-label">Week 11 · Day 2</div>
+<div class="section-title">Encryption & Hashing</div>
+<div class="grid grid-2" style="margin-bottom:40px">
+  <div class="card">
+    <div class="card-accent" style="background:var(--red)"></div>
+    <h3>Symmetric vs Asymmetric Encryption</h3>
+    <table class="compare-table">
+      <tr><th></th><th>Symmetric (AES)</th><th>Asymmetric (RSA)</th></tr>
+      <tr><td class="highlight">Keys</td><td>Same key encrypts + decrypts</td><td>Public key encrypts, private key decrypts</td></tr>
+      <tr><td class="highlight">Speed</td><td>Fast ✅</td><td>Slow ⚠️</td></tr>
+      <tr><td class="highlight">Problem</td><td>How to share the key?</td><td>No key sharing needed</td></tr>
+      <tr><td class="highlight">Used for</td><td>BitLocker, file encryption, VPN data</td><td>HTTPS handshake, SSH keys, email signing</td></tr>
+    </table>
+    <div class="callout callout-tip" style="margin-top:12px">
+      <span class="callout-icon">🤝</span>
+      <span><strong>TLS (HTTPS) uses both:</strong> Asymmetric to securely exchange a key, then symmetric for the actual data — best of both worlds.</span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-accent" style="background:var(--red)"></div>
+    <h3>Hashing — One-Way Fingerprints</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:14px">A hash takes any input and produces a fixed-size output. You cannot reverse it — and the same input always produces the same hash.</p>
+    <div style="background:#0D1B2A; border-radius:10px; padding:14px; font-family:'JetBrains Mono',monospace; font-size:12px; margin-bottom:14px">
+      <div style="color:#64748B"># SHA-256 of "password"</div>
+      <div style="color:#4ADE80; word-break:break-all">"password" → 5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8</div>
+      <br>
+      <div style="color:#64748B"># Even one character different = completely different hash</div>
+      <div style="color:#FCD34D; word-break:break-all">"Password" → 8be3c943b1609fffbfc51aad666d0a04adf83c9d29d7d9f8ea9f4ef7b55cdb9</div>
+    </div>
+    <div class="info-row"><div class="info-key">Passwords</div><div class="info-val">Stored as hashes — never plain text. bcrypt adds a "salt" to prevent rainbow table attacks.</div></div>
+    <div class="info-row"><div class="info-key">File integrity</div><div class="info-val">Compare SHA-256 of downloaded file vs published hash — any tampering changes the hash.</div></div>
+    <div class="info-row"><div class="info-key">MD5</div><div class="info-val">Broken for security — still used for non-security checksums only.</div></div>
+  </div>
+</div>
+
+<!-- INCIDENT RESPONSE -->
+<div class="section-label">Week 11 · Day 4</div>
+<div class="section-title">NIST Incident Response Lifecycle</div>
+<div class="card" style="margin-bottom:40px">
+  <div class="card-accent" style="background:linear-gradient(90deg,#DC2626,#D97706,#16A34A,#1B6CA8)"></div>
+  <div class="grid grid-4" style="margin-top:12px">
+    <div style="background:#FEF2F2; border-radius:12px; padding:18px; text-align:center">
+      <div style="font-size:36px; margin-bottom:8px">🛡️</div>
+      <div style="font-family:'Syne',sans-serif; font-weight:800; font-size:14px; color:#991B1B; margin-bottom:8px">1. PREPARATION</div>
+      <div style="font-size:13px; color:#374151">Security policies, tools deployed, team trained, playbooks written — BEFORE incidents happen</div>
+    </div>
+    <div style="background:#FEF3C7; border-radius:12px; padding:18px; text-align:center">
+      <div style="font-size:36px; margin-bottom:8px">🔍</div>
+      <div style="font-family:'Syne',sans-serif; font-weight:800; font-size:14px; color:#92400E; margin-bottom:8px">2. DETECTION</div>
+      <div style="font-size:13px; color:#374151">Identify that an incident has occurred. Sources: monitoring alerts, user reports, SIEM alerts</div>
+    </div>
+    <div style="background:#FEE2E2; border-radius:12px; padding:18px; text-align:center">
+      <div style="font-size:36px; margin-bottom:8px">🚧</div>
+      <div style="font-family:'Syne',sans-serif; font-weight:800; font-size:14px; color:#7F1D1D; margin-bottom:8px">3. CONTAINMENT</div>
+      <div style="font-size:13px; color:#374151">Isolate affected systems. Stop the spread. Preserve evidence. Keep logs.</div>
+    </div>
+    <div style="background:#F0FDF4; border-radius:12px; padding:18px; text-align:center">
+      <div style="font-size:36px; margin-bottom:8px">📋</div>
+      <div style="font-family:'Syne',sans-serif; font-weight:800; font-size:14px; color:#166534; margin-bottom:8px">4. POST-INCIDENT</div>
+      <div style="font-size:13px; color:#374151">Blameless post-mortem. Root cause analysis. Implement improvements. Update playbooks.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     PART 8 — SCRIPTING
+══════════════════════════════════════════════════════════ -->
+<div class="part-banner" style="background: linear-gradient(135deg, #4C1D95, #7C3AED);">
+  <div class="part-number">8</div>
+  <div class="part-text">
+    <h2>Scripting & Automation</h2>
+    <p>Bash · PowerShell · Python · Git</p>
+  </div>
+</div>
+
+<!-- SCRIPTING COMPARISON -->
+<div class="section-label">Week 7</div>
+<div class="section-title">Bash vs PowerShell vs Python</div>
+<div class="section-subtitle">Know when to reach for each tool</div>
+<div class="grid grid-3" style="margin-bottom:40px">
+  <div class="card">
+    <div class="card-accent" style="background:#4EAA25"></div>
+    <div style="font-size:32px; margin-bottom:10px">🐧</div>
+    <h3 style="color:#166534">Bash</h3>
+    <div class="info-row"><div class="info-key">Best for</div><div class="info-val">Linux system tasks, file operations, quick automation on Linux servers</div></div>
+    <div class="info-row"><div class="info-key">Runs on</div><div class="info-val">Linux, macOS. Limited on Windows (WSL/Git Bash).</div></div>
+    <div class="info-row"><div class="info-key">Data type</div><div class="info-val">Plain text strings — parse with grep, awk, sed</div></div>
+    <div class="code-block" style="margin-top:12px">
+      <span class="cmt">#!/bin/bash</span><br>
+      <span class="cmt">set -euo pipefail</span><br>
+      <span class="var">DISK</span>=<span class="cmd">$(df / | tail -1 | awk '{print $5}')</span><br>
+      <span class="str">if</span> [[ ${DISK%\%} -gt 80 ]]; <span class="str">then</span><br>
+      &nbsp;&nbsp;<span class="cmd">echo</span> <span class="str">"WARN: Disk at $DISK"</span><br>
+      <span class="str">fi</span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-accent" style="background:#012456"></div>
+    <div style="font-size:32px; margin-bottom:10px">🪟</div>
+    <h3 style="color:#1E40AF">PowerShell</h3>
+    <div class="info-row"><div class="info-key">Best for</div><div class="info-val">Windows Server, Active Directory, anything Microsoft</div></div>
+    <div class="info-row"><div class="info-key">Runs on</div><div class="info-val">Windows (native), Linux/macOS (PS Core)</div></div>
+    <div class="info-row"><div class="info-key">Data type</div><div class="info-val">Objects — access properties directly, no parsing</div></div>
+    <div class="code-block" style="margin-top:12px">
+      <span class="cmt"># Get top CPU processes</span><br>
+      <span class="cmd">Get-Process</span> |<br>
+      &nbsp;&nbsp;<span class="cmd">Sort-Object</span> CPU -Desc |<br>
+      &nbsp;&nbsp;<span class="cmd">Select-Object</span> -First 5<br><br>
+      <span class="cmt"># AD: create user</span><br>
+      <span class="cmd">New-ADUser</span> -Name <span class="str">"Alice"</span> \<br>
+      &nbsp;&nbsp;-Enabled <span class="var">$true</span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-accent" style="background:#3776AB"></div>
+    <div style="font-size:32px; margin-bottom:10px">🐍</div>
+    <h3 style="color:#1D4ED8">Python</h3>
+    <div class="info-row"><div class="info-key">Best for</div><div class="info-val">Cross-platform automation, REST APIs, data processing, complex logic</div></div>
+    <div class="info-row"><div class="info-key">Runs on</div><div class="info-val">Windows, Linux, macOS, cloud functions — identical</div></div>
+    <div class="info-row"><div class="info-key">Data type</div><div class="info-val">Rich types — dicts, lists, JSON native</div></div>
+    <div class="code-block" style="margin-top:12px">
+      <span class="var">import</span> psutil<br><br>
+      <span class="var">cpu</span> = psutil.cpu_percent(interval=1)<br>
+      <span class="var">mem</span> = psutil.virtual_memory()<br><br>
+      <span class="str">if</span> cpu > 80:<br>
+      &nbsp;&nbsp;<span class="cmd">print</span>(<span class="str">f"CPU: {cpu}% — HIGH"</span>)<br>
+      &nbsp;&nbsp;<span class="cmt"># send_slack_alert()</span>
+    </div>
+  </div>
+</div>
+
+<!-- BACKUP & DR -->
+<div class="part-banner" style="background: linear-gradient(135deg, #1E293B, #334155);">
+  <div class="part-number">9</div>
+  <div class="part-text">
+    <h2>Backup, DR & Monitoring</h2>
+    <p>3-2-1-1-0 Rule · RTO · RPO · Backup Types</p>
+  </div>
+</div>
+
+<div class="section-label">Week 10 · Day 5</div>
+<div class="section-title">Backup Strategy</div>
+<div class="grid grid-2" style="margin-bottom:60px">
+  <div class="card">
+    <div class="card-accent" style="background:var(--navy)"></div>
+    <h3>The 3-2-1-1-0 Backup Rule</h3>
+    <div style="display:flex; flex-direction:column; gap:8px; margin-top:8px">
+      <div style="background:#EFF6FF; border-radius:8px; padding:12px; display:flex; gap:12px; align-items:center">
+        <div style="font-family:'Syne',sans-serif; font-size:36px; font-weight:800; color:var(--blue); min-width:40px; text-align:center">3</div>
+        <div><strong>Copies</strong> of your data — original + 2 backups</div>
+      </div>
+      <div style="background:#F0FDF4; border-radius:8px; padding:12px; display:flex; gap:12px; align-items:center">
+        <div style="font-family:'Syne',sans-serif; font-size:36px; font-weight:800; color:var(--green); min-width:40px; text-align:center">2</div>
+        <div><strong>Different media</strong> — e.g. local disk AND cloud</div>
+      </div>
+      <div style="background:#FEF3C7; border-radius:8px; padding:12px; display:flex; gap:12px; align-items:center">
+        <div style="font-family:'Syne',sans-serif; font-size:36px; font-weight:800; color:var(--amber); min-width:40px; text-align:center">1</div>
+        <div><strong>Off-site copy</strong> — fire or flood can't destroy all copies</div>
+      </div>
+      <div style="background:#EDE9FE; border-radius:8px; padding:12px; display:flex; gap:12px; align-items:center">
+        <div style="font-family:'Syne',sans-serif; font-size:36px; font-weight:800; color:var(--purple); min-width:40px; text-align:center">1</div>
+        <div><strong>Immutable backup</strong> — ransomware can't encrypt or delete it</div>
+      </div>
+      <div style="background:#FEE2E2; border-radius:8px; padding:12px; display:flex; gap:12px; align-items:center">
+        <div style="font-family:'Syne',sans-serif; font-size:36px; font-weight:800; color:var(--red); min-width:40px; text-align:center">0</div>
+        <div><strong>Errors after verification</strong> — test your restores! Untested backups aren't backups.</div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-accent" style="background:var(--navy)"></div>
+    <h3>RTO vs RPO</h3>
+    <div style="background:var(--gray); border-radius:10px; padding:16px; margin-bottom:14px">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px">
+        <div style="font-size:12px; font-weight:700; color:var(--muted); font-family:'JetBrains Mono',monospace">DISASTER STRIKES</div>
+        <div style="font-size:12px; font-weight:700; color:var(--muted); font-family:'JetBrains Mono',monospace">SERVICE RESTORED</div>
+      </div>
+      <div style="height:12px; background:linear-gradient(90deg,var(--red),var(--amber)); border-radius:6px; position:relative">
+        <div style="position:absolute; top:20px; left:50%; transform:translateX(-50%); font-size:12px; font-weight:700; color:var(--blue); white-space:nowrap; font-family:'JetBrains Mono',monospace">← RTO: Max downtime →</div>
+      </div>
+    </div>
+    <div class="info-row">
+      <div class="info-key"><span class="tag tag-red">RTO</span></div>
+      <div class="info-val"><strong>Recovery Time Objective</strong> — maximum acceptable downtime. "We must be back online within 4 hours." Drives redundancy architecture.</div>
+    </div>
+    <div class="info-row">
+      <div class="info-key"><span class="tag tag-blue">RPO</span></div>
+      <div class="info-val"><strong>Recovery Point Objective</strong> — maximum data loss in time. "We cannot lose more than 1 hour of data." Drives backup frequency.</div>
+    </div>
+    <div class="callout callout-tip" style="margin-top:12px">
+      <span class="callout-icon">💡</span>
+      <span>If RTO = 1 hour, you need automated failover. If RPO = 15 minutes, you need continuous replication. These business requirements drive your infrastructure design.</span>
+    </div>
+  </div>
+</div>
+
+</div><!-- /page -->
+
+<div class="footer">
+  <strong>IT Infrastructure & DevOps Mastery — Visual Study Guide</strong><br>
+  Covering all 12 weeks · Hardware · Networking · Linux · Windows Server · Cloud · Containers · Security · Scripting<br>
+  <span style="font-size:11px">Use alongside the IT Mastery Handbook for maximum retention</span>
+</div>
+
+</body>
+</html>
